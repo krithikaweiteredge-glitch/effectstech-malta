@@ -78,16 +78,18 @@
 
   /* ---------- page curtain: lifts on arrival, falls before leaving ---------- */
   const curtain = $('.curtain');
+  // safety net: if the lift animation can't run, take the curtain away anyway
+  if (curtain) setTimeout(() => { if (!curtain.classList.contains('is-closing')) curtain.classList.add('is-gone'); }, 1700);
   if (curtain && !reduce) {
     $$('a[href]').forEach(a => a.addEventListener('click', e => {
       const url = new URL(a.href, location.href);
       if (a.target === '_blank' || url.origin !== location.origin || e.metaKey || e.ctrlKey || e.shiftKey) return;
       if (url.pathname === location.pathname) return; // in-page anchors are handled above
       e.preventDefault();
-      curtain.style.display = 'grid'; curtain.classList.add('is-closing');
+      curtain.classList.remove('is-gone'); curtain.style.display = 'grid'; curtain.classList.add('is-closing');
       setTimeout(() => { location.href = url.href; }, 650);
     }));
-    addEventListener('pageshow', ev => { if (ev.persisted) curtain.classList.remove('is-closing'); });
+    addEventListener('pageshow', ev => { if (ev.persisted) { curtain.classList.remove('is-closing'); curtain.classList.add('is-gone'); } });
   }
 
   /* ---------- home hero film: loop a calm passage of the wedding film ---------- */

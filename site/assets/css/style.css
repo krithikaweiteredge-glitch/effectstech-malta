@@ -732,3 +732,76 @@ body{text-rendering:optimizeLegibility;font-feature-settings:"liga","kern"}
   .hscroll__bar{display:none}
 }
 .spread__text{align-self:stretch}  /* full-height column so the text can stay pinned */
+
+/* =========================================================
+   TYPE SYSTEM — one rule per role, used identically on every page.
+   Two families only: Cormorant Garamond (serif, display & story)
+   and Montserrat (sans, text & labels). Sizes come from these tokens;
+   this block is last in the file so it is the single source of truth.
+   ========================================================= */
+:root{
+  --t-display:clamp(64px,8.6vw,136px);   /* page / chapter titles */
+  --t-h2:clamp(42px,5.2vw,80px);         /* section headings */
+  --t-statement:clamp(28px,3vw,46px);    /* serif statements & chapter leads */
+  --t-h3:clamp(26px,2.3vw,34px);         /* card & item titles */
+  --t-lead:clamp(19px,1.5vw,22px);       /* serif italic sub-lines */
+  --t-num:20px;                          /* serif italic numerals */
+  --t-caption:16px;                      /* photo captions */
+  --t-body:15px;                         /* sans body copy */
+  --t-label:10.5px;                      /* sans uppercase labels */
+  --track-label:.3em;
+}
+
+/* 1. Display — serif, light, roman (italic only via <em>) */
+.hero__title em,.opener__title,.phero__title,.film__title{font-family:var(--serif)!important;font-weight:300!important;font-size:var(--t-display)!important;line-height:.98!important;letter-spacing:-.01em!important}
+.hero__title span{font-size:calc(var(--t-display) * .42)!important;letter-spacing:.02em!important}
+.hero__title em{font-size:calc(var(--t-display) * 1.6)!important}
+
+/* 2. Section headings */
+.h2,.cta__line,.footer__line-big,.sitem__title,.snext__title,.place__name{font-family:var(--serif)!important;font-weight:300!important;font-size:var(--t-h2)!important;line-height:1.04!important;letter-spacing:-.005em!important;font-style:normal}
+
+/* 3. Statements & chapter leads */
+.copy__lead,.lead,.pull,.manifesto__text,.tier__lede{font-family:var(--serif)!important;font-weight:300!important;font-size:var(--t-statement)!important;line-height:1.22!important;letter-spacing:0!important;font-style:normal}
+
+/* 4. Item titles */
+.keep h3,.pillars h3,.steps h4,.next h4,.faq summary,.col h3:not(.metal){font-family:var(--serif)!important;font-weight:300!important;font-size:var(--t-h3)!important;line-height:1.12!important;letter-spacing:0!important}
+
+/* 5. Serif italic sub-lines */
+.hero__sub,.phero__sub,.opener__place,.place__desc,.collections__note,.footer__sub,.sign,.sintro__meta dd,.reelbox__title{font-family:var(--serif)!important;font-weight:300!important;font-style:italic!important;font-size:var(--t-lead)!important;letter-spacing:0!important}
+.sintro__meta dd{font-style:normal!important}
+
+/* 6. Numerals — serif italic, gold */
+.col__no,.sitem__no,.pillars__no,.rail__no,.spread__count,.steps li span,.next li span{font-family:var(--serif)!important;font-style:italic!important;font-weight:300!important;font-size:var(--t-num)!important;letter-spacing:0!important}
+.spread__count b{font-size:calc(var(--t-num) * 1.5)!important}
+
+/* 7. Captions */
+.ph figcaption,.lightbox figcaption{font-family:var(--serif)!important;font-style:italic!important;font-weight:300!important;font-size:var(--t-caption)!important;letter-spacing:.01em!important}
+
+/* 8. Body copy — every running paragraph */
+body,.copy p:not(.copy__lead),.prologue .body,.sintro .body,.keep p,.pillars p:not(.pillars__no),.steps p,.next p,.faq details p,
+.col p:not(.col__no):not(.col__sub),.feature__text p:not(.eyebrow),.sitem__text>p:not(.eyebrow):not(.sitem__no),.tier li,
+.enquire__lede,.film__text p:not(.eyebrow),.frames__lede,.footer__col a,.footer__col p,.footer__col,.menu__side a{
+  font-family:var(--sans)!important;font-weight:300!important;font-size:var(--t-body)!important;line-height:1.85!important;letter-spacing:.01em!important;font-style:normal!important}
+.menu__side a{font-family:var(--serif)!important;font-size:19px!important;line-height:1.5!important}
+
+/* 9. Labels — sans, uppercase, tracked: every small caps line and button */
+.eyebrow,.opener__no,.hero__scroll,.hscroll__hint,.feature__more,.sitem__more,.tier__sub,.col__sub,.footer__kicker,.footer__btn,
+.footer__col h4,.footer__base,.footer__base a,.sintro__meta dt,.menu__label,.cta__btn,.tier__btn,.send,.col a,.film__play,
+.nav__chapters,.nav__enquire,.loader__line,.rail__name,.opts legend,.f span,.lightbox__close,.reelbox__close,.index__cta,.reel__hint{
+  font-family:var(--sans)!important;font-weight:400!important;font-size:var(--t-label)!important;letter-spacing:var(--track-label)!important;text-transform:uppercase!important;font-style:normal!important;line-height:1.6}
+.film__play i{font-family:var(--sans)!important;font-size:9px!important;letter-spacing:.24em!important;font-style:normal!important}
+.f input:focus+span,.f input:not(:placeholder-shown)+span,.f textarea:focus+span,.f textarea:not(:placeholder-shown)+span{font-size:9px!important}
+
+/* form entries & options read as the serif voice */
+.f input,.f textarea,.opts span{font-family:var(--serif)!important;font-weight:300!important;font-size:21px!important;letter-spacing:0!important}
+.opts span{font-size:18px!important}
+
+@media (max-width:760px){
+  :root{--t-body:15.5px}
+  .hero__title em{font-size:calc(var(--t-display) * 1.35)!important}
+}
+/* labels inside body-copy containers keep the label style */
+p.eyebrow.eyebrow,p.hscroll__hint.hscroll__hint{font-family:var(--sans)!important;font-weight:400!important;font-size:var(--t-label)!important;letter-spacing:var(--track-label)!important;text-transform:uppercase!important;line-height:1.6!important}
+/* never let the page curtain cover the site: no curtain when motion is reduced */
+@media (prefers-reduced-motion:reduce){.curtain{display:none!important}}
+.curtain.is-gone{display:none}
