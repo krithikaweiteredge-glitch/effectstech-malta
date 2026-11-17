@@ -30,7 +30,7 @@
     const done = () => { document.body.classList.remove('is-loading'); $('.loader')?.remove(); lock(false); ScrollTrigger.refresh(); };
     if (reduce) { done(); return; }
     gsap.timeline({ onComplete: done })
-      .from('.loader__mark', { opacity: 0, letterSpacing: '.4em', duration: 1.3, ease: 'power3.out' })
+      .from('.loader__logo path', { strokeDasharray: 1600, strokeDashoffset: 1600, duration: 1.6, stagger: .2, ease: 'power2.inOut' })
       .from('.loader__line', { opacity: 0, y: 10, duration: .8 }, '-=.7')
       .to('.loader', { clipPath: 'inset(0 0 100% 0)', duration: 1.2, ease: 'expo.inOut', delay: .3 })
       .from('.hero__title span, .hero__title em', { y: 80, opacity: 0, duration: 1.6, stagger: .15, ease: 'expo.out' }, '-=.6')

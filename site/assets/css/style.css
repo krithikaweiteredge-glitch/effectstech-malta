@@ -315,3 +315,17 @@ em{font-family:var(--serif);font-style:italic;font-weight:300}
 [data-metal=silver] .metal{background-image:linear-gradient(100deg,#4f545a,#8c9298 30%,#c3c7cc 45%,#62676d 60%,#9ea3a9 80%,#4f545a)}
 [data-metal=gold] .metal{background-image:linear-gradient(100deg,#9a733a,#e2c48a 30%,#fff2cf 45%,#b48b4a 60%,#efd9a4 80%,#9a733a)}
 [data-metal=platinum] .metal{background-image:linear-gradient(100deg,#55526a,#8f8aa6 30%,#c6c2d6 45%,#6a6682 60%,#a29eb6 80%,#55526a)}
+
+/* Effects Tech logo mark */
+.logo-mark{display:block;height:auto}
+.loader__logo{width:clamp(90px,10vw,130px);color:var(--ink)}
+.nav__brand{flex-direction:row;align-items:center;gap:16px}
+.nav__logo{width:46px;color:currentColor}
+.nav__words{display:flex;flex-direction:column;text-align:left;line-height:1.1}
+.nav__words span{font-family:var(--serif);font-weight:400;font-size:22px;letter-spacing:.2em;text-transform:uppercase}
+.nav__words em{font-size:15px;letter-spacing:.08em}
+.footer__logo{width:clamp(70px,7vw,96px);margin:clamp(70px,8vw,110px) auto 0;color:#e8d3b0}
+.footer__brand{margin-top:26px}
+@media (max-width:900px){.nav__logo{width:34px}.nav__words span{font-size:15px;letter-spacing:.14em}.nav__words em{font-size:12px}.nav__brand{gap:10px}}
+@media (max-width:520px){.nav__words{display:none}.nav__logo{width:40px}}
+.nav__brand .nav__words{text-transform:none;letter-spacing:0;font-size:inherit}
