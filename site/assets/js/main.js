@@ -69,6 +69,32 @@
   // arriving at index.html#chX from another page
   if (location.hash && $(location.hash)) addEventListener('load', () => setTimeout(() => goTo($(location.hash)), loader ? 3600 : 300));
 
+  /* ---------- page curtain: lifts on arrival, falls before leaving ---------- */
+  const curtain = $('.curtain');
+  if (curtain && !reduce) {
+    $$('a[href]').forEach(a => a.addEventListener('click', e => {
+      const url = new URL(a.href, location.href);
+      if (a.target === '_blank' || url.origin !== location.origin || e.metaKey || e.ctrlKey || e.shiftKey) return;
+      if (url.pathname === location.pathname) return; // in-page anchors are handled above
+      e.preventDefault();
+      curtain.style.display = 'grid'; curtain.classList.add('is-closing');
+      setTimeout(() => { location.href = url.href; }, 650);
+    }));
+    addEventListener('pageshow', ev => { if (ev.persisted) curtain.classList.remove('is-closing'); });
+  }
+
+  /* ---------- home hero film: loop a calm passage of the wedding film ---------- */
+  const hv = $('.hero__video');
+  if (hv) {
+    const [a, b] = (hv.dataset.loop || '0,0').split(',').map(Number);
+    // only reveal the film once it has really jumped to the calm passage;
+    // if the server can't seek, the photo slideshow underneath simply stays.
+    hv.addEventListener('seeked', () => { if (hv.currentTime >= a - .5 && hv.currentTime < b) { hv.play().catch(() => {}); hv.classList.add('is-playing'); } });
+    const start = () => { hv.pause(); hv.currentTime = a; };
+    if (hv.readyState >= 1) start(); else hv.addEventListener('loadedmetadata', start, { once: true });
+    hv.addEventListener('timeupdate', () => { if (hv.currentTime >= b || hv.currentTime < a - 1) hv.currentTime = a; });
+  }
+
   /* ---------- home hero ---------- */
   const heroImgs = $$('.hero__img');
   if (heroImgs.length > 1) { let h = 0; setInterval(() => { heroImgs[h].classList.remove('is-on'); h = (h + 1) % heroImgs.length; heroImgs[h].classList.add('is-on'); }, 5500); }

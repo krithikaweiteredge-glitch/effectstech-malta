@@ -540,3 +540,58 @@ em{font-family:var(--serif);font-style:italic;font-weight:300}
 .sg:has(img[src*="still-"]){--ar:656/269}  /* film stills keep their native cinemascope frame */
 .metal{-webkit-background-clip:text;background-clip:text;color:transparent;background-size:200% 100%;font-style:italic;padding:0 .08em;transition:background-position 1.4s var(--ease)}
 .tier:hover .metal{background-position:100% 50%}
+
+/* =========================================================
+   LUXURY LAYER — film hero, gold frames, curtain, details
+   ========================================================= */
+/* home hero film */
+.hero__video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.38);opacity:0;transition:opacity 2.4s var(--ease);filter:saturate(.92) contrast(1.04)}
+.hero__video.is-playing{opacity:1}
+.hero__shade{background:radial-gradient(ellipse at center,rgba(20,17,15,.2),rgba(20,17,15,.66) 90%),linear-gradient(180deg,rgba(20,17,15,.45),transparent 28%,transparent 68%,rgba(20,17,15,.6))}
+
+/* double gold hairline frame, like an engraved invitation */
+.hero__border{position:absolute;z-index:3;inset:clamp(14px,1.8vw,26px);border:1px solid rgba(232,211,176,.42);pointer-events:none}
+.hero__border span{position:absolute;inset:6px;border:1px solid rgba(232,211,176,.18)}
+.hero__border::before,.hero__border::after{content:"✦";position:absolute;left:50%;transform:translate(-50%,-50%);font-size:10px;color:#e8d3b0;line-height:1}
+.hero__border::before{top:0}
+.hero__border::after{top:100%}
+.phero .hero__border{z-index:1}
+
+/* venue marquee */
+.marquee{overflow:hidden;padding:30px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--ivory)}
+.marquee__track{display:flex;align-items:center;gap:46px;width:max-content;animation:marq 70s linear infinite}
+.marquee span{font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(30px,3.6vw,54px);color:var(--ink);white-space:nowrap}
+.marquee i{font-style:normal;color:var(--gold);font-size:12px}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* curtain between pages */
+.curtain{position:fixed;inset:0;z-index:950;background:var(--noir);display:grid;place-items:center;pointer-events:none;animation:curtainUp 1.1s .25s var(--ease) forwards}
+.curtain__logo{width:64px;color:#e8d3b0;animation:curtainLogo 1s var(--ease) forwards}
+.page-home .curtain{display:none}
+.curtain.is-closing{animation:curtainDown .75s var(--ease) forwards}
+@keyframes curtainUp{to{transform:translateY(-100%)}}
+@keyframes curtainDown{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@keyframes curtainLogo{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* eyebrows get a gold hairline */
+.eyebrow::before{content:"";display:inline-block;width:34px;height:1px;background:var(--gold);vertical-align:middle;margin:-2px 14px 0 0}
+.hero .eyebrow::before,.phero .eyebrow::before,.film .eyebrow::before{background:#e8d3b0}
+
+/* buttons: a slow gold sweep */
+.cta__btn,.tier__btn,.send,.footer__btn,.nav__enquire{background-image:linear-gradient(var(--gold),var(--gold));background-repeat:no-repeat;background-position:left center;background-size:0% 100%;transition:background-size .8s var(--ease),color .5s,border-color .5s}
+.cta__btn:hover,.tier__btn:hover,.send:hover,.nav__enquire:hover{background-size:100% 100%;background-color:var(--ink);color:var(--ivory);border-color:var(--gold)}
+.tier--dark .tier__btn{background-color:#e8d3b0}
+.tier--dark .tier__btn:hover{color:var(--noir)}
+.footer__btn{background-image:linear-gradient(#e8d3b0,#e8d3b0)}
+.footer__btn:hover{background-size:100% 100%;background-color:transparent;color:var(--noir)}
+
+/* photographs: soft depth + gentle hover grade */
+.ph__crop{box-shadow:0 30px 60px -40px rgba(20,17,15,.45)}
+.ph img{filter:saturate(.94) contrast(1.02)}
+.ph:hover img{filter:saturate(1.02) contrast(1.04)}
+
+/* refined scrollbar + type rendering */
+html{scrollbar-width:thin;scrollbar-color:var(--gold) var(--ivory)}
+::-webkit-scrollbar{width:8px}::-webkit-scrollbar-track{background:var(--ivory)}::-webkit-scrollbar-thumb{background:var(--gold);border-radius:8px}
+body{text-rendering:optimizeLegibility;font-feature-settings:"liga","kern"}
+@media (max-width:760px){.hero__border{inset:10px}.marquee{padding:20px 0}}

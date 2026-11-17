@@ -175,6 +175,7 @@ const loader = () => `
 const page = ({ file, title, desc, body, cls = '', withLoader = false, rail = false }) =>
   `${head(title, desc)}
 <body class="page-${cls}${withLoader ? ' is-loading' : ''}">
+<div class="curtain" aria-hidden="true">${LOGO('curtain__logo')}</div>
 ${withLoader ? loader() : ''}${nav(file)}
 ${rail ? `<aside class="rail" aria-hidden="true"><span class="rail__no">I</span><span class="rail__bar"><i></i></span><span class="rail__name">The Arrival</span></aside>` : ''}
 <main id="top">
@@ -189,6 +190,7 @@ ${overlays()}
 const phero = ({ eyebrow, title, sub, image, short = false }) => `
 <section class="phero${short ? ' phero--short' : ''}">
   <div class="phero__img" style="background-image:url(${img(image)})"></div>
+  <div class="hero__border" aria-hidden="true"><span></span></div>
   <div class="phero__text">
     <p class="eyebrow eyebrow--light">${eyebrow}</p>
     <h1 class="phero__title">${title}</h1>
@@ -266,6 +268,7 @@ STORIES.forEach((s, i) => {
   const hero = s.video
     ? `<section class="phero phero--video">
   <video class="phero__video" src="assets/video/${s.video}" poster="${img(s.poster)}" muted loop playsinline autoplay preload="metadata" aria-hidden="true"></video>
+  <div class="hero__border" aria-hidden="true"><span></span></div>
   <div class="phero__text"><p class="eyebrow eyebrow--light">${s.kicker}</p><h1 class="phero__title">${s.title}</h1><p class="phero__sub">${s.place}</p></div>
 </section>`
     : phero({ eyebrow: s.kicker, title: s.title, sub: s.place, image: s.hero });
