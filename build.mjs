@@ -7,6 +7,14 @@ const img = f => `assets/img/${f}`;
 const BUILD = Date.now().toString(36);
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
 
+// Pixel sizes of every image (regenerate src/dims.json when images change).
+// Each <img> gets width/height so the browser reserves its space before it loads;
+// without this, late-loading photos push the page down and scroll effects misfire.
+const DIMS = JSON.parse(readFileSync('src/dims.json', 'utf8'));
+const sizeImages = html => html.replace(/<img (?![^>]*\bwidth=)([^>]*?)src="assets\/img\/([^"]+)"/g, (m, pre, f) => {
+  const d = DIMS[f]; return d ? `<img ${pre}src="assets/img/${f}" width="${d[0]}" height="${d[1]}"` : m;
+});
+
 /* ---------------------------------------------------------------- data */
 const PAGES = [
   ['index.html', 'Home'],
@@ -433,5 +441,5 @@ out['enquire.html'] = page({
 </section>`,
 });
 
-for (const [f, html] of Object.entries(out)) writeFileSync(`site/${f}`, html);
+for (const [f, html] of Object.entries(out)) writeFileSync(`site/${f}`, sizeImages(html));
 console.log('built', Object.keys(out).length, 'pages:', Object.keys(out).join(', '));

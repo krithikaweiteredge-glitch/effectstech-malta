@@ -24,6 +24,13 @@
     img.parentNode.insertBefore(crop, img); crop.appendChild(img);
   });
 
+  /* ---------- re-measure scroll effects whenever a photo or font finishes loading ---------- */
+  let refreshT;
+  const refreshSoon = () => { clearTimeout(refreshT); refreshT = setTimeout(() => ScrollTrigger.refresh(), 150); };
+  $$('img').forEach(im => { if (!im.complete) im.addEventListener('load', refreshSoon, { once: true }); });
+  document.fonts?.ready.then(refreshSoon);
+  addEventListener('load', refreshSoon);
+
   /* ---------- loader (home) ---------- */
   const loader = $('.loader');
   const intro = () => {
