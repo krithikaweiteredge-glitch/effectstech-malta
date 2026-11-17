@@ -345,3 +345,7 @@ em{font-family:var(--serif);font-style:italic;font-weight:300}
 @media (max-width:900px){.nav__logo{width:34px}.nav__words span{font-size:15px;letter-spacing:.14em}.nav__words em{font-size:12px}.nav__brand{gap:10px}}
 @media (max-width:520px){.nav__words{display:none}.nav__logo{width:40px}}
 .nav__brand .nav__words{text-transform:none;letter-spacing:0;font-size:inherit}
+
+/* header over dark sections */
+.nav.is-light.is-dark{background:rgba(20,17,15,.72);color:var(--on-noir);border-bottom-color:var(--line-noir)}
+.nav.is-light.is-dark .nav__enquire:hover{color:var(--noir);background:#e8d3b0;border-color:#e8d3b0}

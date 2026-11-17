@@ -44,6 +44,9 @@
   addEventListener('scroll', () => {
     const y = scrollY;
     nav.classList.toggle('is-light', y > innerHeight * .85);
+    // over dark photographs and noir sections the bar turns dark too
+    const under = document.elementsFromPoint(innerWidth / 2, nav.offsetHeight + 2).find(el => !nav.contains(el));
+    nav.classList.toggle('is-dark', !!under?.closest('.opener, .chapter--dark, .film, .footer, .hero'));
     nav.classList.toggle('is-hidden', y > lastY && y > innerHeight && !index.classList.contains('is-open'));
     lastY = y;
   }, { passive: true });
