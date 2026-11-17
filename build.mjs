@@ -50,7 +50,7 @@ const STORIES = [
     lead: 'Three days on Valletta\'s bastions: a baraat to the beat of Maltese pipes and drums, pheras under white flowers, a sangeet that ran until dawn and a cannon salute over the harbour.',
     body: 'We photographed and filmed every function, from the garden brunch in the fortress to the final dance. These are frames from the film and the photographs that followed.',
     meta: [['Where', 'Valletta, Malta'], ['Celebration', 'Three days, five functions'], ['Coverage', 'Photography & film'], ['Experience', 'Platinum']],
-    photos: [['still-baraat.jpg', 'The walk in'], ['still-embrace.jpg', 'Beneath the mandap'], ['p08_004.jpg', 'Mehndi among the cannons'], ['still-aerial.jpg', 'Valletta, from above'], ['still-pheras.jpg', 'Family, laughing'], ['p09_005.jpg', 'The harbour lounge'], ['still-bride.jpg', 'The bride, at the sangeet'], ['still-music.jpg', 'Music in the fortress garden'], ['p39_031.jpg', 'The cannon salute'], ['still-guests.jpg', 'The garden brunch'], ['p07_003.jpg', 'The last song']],
+    photos: [['still-baraat.jpg', 'The walk in'], ['still-embrace.jpg', 'Beneath the mandap'], ['p08_004.jpg', 'Mehndi among the cannons'], ['p09_005.jpg', 'The harbour lounge'], ['still-aerial.jpg', 'Valletta, from above'], ['still-pheras.jpg', 'Family, laughing'], ['still-bride.jpg', 'The bride, at the sangeet'], ['p39_031.jpg', 'The cannon salute'], ['p07_003.jpg', 'The last song'], ['still-music.jpg', 'Music in the fortress garden'], ['still-guests.jpg', 'The garden brunch']],
     pull: 'A baraat with Maltese pipes and drums. <em>Only on this island.</em>',
   },
   {
@@ -207,6 +207,24 @@ const cta = (line = 'Tell us about <em>your Malta wedding.</em>') => `
 
 const tierCard = t => `<article class="col${t.feature ? ' col--mid' : ''}" data-metal="${t.key.toLowerCase()}"><p class="col__no">${t.no}</p><h3 class="metal">${t.key}</h3><p class="col__sub">Celebration Experience</p><p>${t.for}.</p><a href="experiences.html#${t.key.toLowerCase()}">Discover ${t.key}</a></article>`;
 
+/* story gallery: film stills get their own cinemascope row; photographs are
+   paired (a large 3:2 beside a square, alternating sides) so heights match. */
+const fig = ([f, cap], cls) => `<figure class="ph ${cls}" data-reveal><img src="${img(f)}" alt="${esc(cap)}" loading="lazy"><figcaption>${cap}</figcaption></figure>`;
+const galleryRows = photos => {
+  const rows = []; let buf = [], flip = false, cine = 0;
+  const flush = () => {
+    if (buf.length === 2) { rows.push(`<div class="srow srow--pair${flip ? ' srow--flip' : ''}">${fig(buf[0], 'sr-big')}${fig(buf[1], 'sr-small')}</div>`); flip = !flip; }
+    else if (buf.length === 1) rows.push(`<div class="srow srow--single">${fig(buf[0], 'sr-single')}</div>`);
+    buf = [];
+  };
+  photos.forEach(p => {
+    if (p[0].startsWith('still-')) { flush(); rows.push(`<div class="srow srow--cine${cine++ % 2 ? ' srow--cine-r' : ''}">${fig(p, 'sr-cine')}</div>`); }
+    else { buf.push(p); if (buf.length === 2) flush(); }
+  });
+  flush();
+  return rows.join('\n  ');
+};
+
 /* ---------------------------------------------------------------- pages */
 const out = {};
 
@@ -288,7 +306,7 @@ ${s.video ? `<section class="sfilm">
   </div>
 </section>` : ''}
 <section class="sgal">
-  ${s.photos.map(([f, cap], k) => `<figure class="ph sg sg--${k % 5}" data-reveal><img src="${img(f)}" alt="${esc(cap)}" loading="lazy"><figcaption>${cap}</figcaption></figure>`).join('\n  ')}
+  ${galleryRows(s.photos)}
 </section>
 <p class="pull">${s.pull}</p>
 <a href="story-${next.slug}.html" class="snext">

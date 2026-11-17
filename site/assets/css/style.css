@@ -595,3 +595,82 @@ html{scrollbar-width:thin;scrollbar-color:var(--gold) var(--ivory)}
 ::-webkit-scrollbar{width:8px}::-webkit-scrollbar-track{background:var(--ivory)}::-webkit-scrollbar-thumb{background:var(--gold);border-radius:8px}
 body{text-rendering:optimizeLegibility;font-feature-settings:"liga","kern"}
 @media (max-width:760px){.hero__border{inset:10px}.marquee{padding:20px 0}}
+
+/* =========================================================
+   LAYOUT SYSTEM v2 — clean editorial grid, no overlaps.
+   Each row's spans add up to 12; rhythm comes from size and
+   alignment, never from negative or percentage offsets.
+   ========================================================= */
+.chapter__body .ph{margin-top:0!important;align-self:start}
+.chapter__body{row-gap:clamp(56px,7vw,110px)}
+
+/* I — The Arrival */
+.layout-a .copy{grid-column:1/6;grid-row:1;align-self:center}
+.layout-a .g1{grid-column:7/13;grid-row:1;--ar:4/3}
+.layout-a .g2{grid-column:1/8;grid-row:2;--ar:3/2}
+.layout-a .g3{grid-column:8/13;grid-row:2;--ar:4/5;align-self:end}
+.layout-a .g4{grid-column:3/11;grid-row:3;--ar:21/9}
+
+/* II — Mehndi */
+.layout-b .g1{grid-column:1/8;grid-row:1;--ar:16/10}
+.layout-b .copy{grid-column:9/13;grid-row:1;align-self:center}
+.layout-b .g2{grid-column:1/6;grid-row:2;--ar:4/5}
+.layout-b .g3{grid-column:6/13;grid-row:2;--ar:3/2;align-self:end}
+.layout-b .g4{grid-column:1/13;grid-row:3;--ar:21/8}
+
+/* IV — Vows by the sea: wide, then an even triptych */
+.layout-d .copy{grid-column:1/-1;grid-row:1}
+.layout-d .g1{grid-column:1/13;grid-row:2;--ar:21/9}
+.layout-d .g2{grid-column:1/5;grid-row:3;--ar:4/5}
+.layout-d .g3{grid-column:5/9;grid-row:3;--ar:4/5}
+.layout-d .g4{grid-column:9/13;grid-row:3;--ar:4/5}
+
+/* V — Wonderland */
+.layout-e .g1{grid-column:1/7;grid-row:1;--ar:1/1}
+.layout-e .copy{grid-column:8/13;grid-row:1;align-self:center}
+.layout-e .g2{grid-column:1/5;grid-row:2;--ar:4/5}
+.layout-e .g3{grid-column:5/13;grid-row:2;--ar:3/2;align-self:end}
+.layout-e .g4{grid-column:4/10;grid-row:3;--ar:3/2}
+
+/* VI — The Farewell */
+.layout-f .g1{grid-column:1/6;grid-row:1;--ar:4/5}
+.layout-f .copy{grid-column:7/13;grid-row:1;align-self:center}
+.layout-f .g2{grid-column:1/7;grid-row:2;--ar:3/2}
+.layout-f .g3{grid-column:7/13;grid-row:2;--ar:3/2}
+
+/* story galleries: alternating pairs + a wide closer, every 5 */
+.sgal .sg{margin-top:0!important;align-self:start}
+.sg--0{grid-column:1/8;--ar:3/2}
+.sg--1{grid-column:8/13;--ar:4/5;align-self:end}
+.sg--2{grid-column:1/6;--ar:4/5}
+.sg--3{grid-column:6/13;--ar:3/2;align-self:end}
+.sg--4{grid-column:2/12;--ar:21/9}
+.sg:has(img[src*="still-"]){--ar:656/269}
+
+/* the frames grid on the old page is gone; keep the prologue tidy too */
+.prologue__b{margin-bottom:0;align-self:end}
+
+@media (max-width:900px){
+  .chapter__body .ph,.sgal .sg{grid-column:1/-1!important;grid-row:auto!important;align-self:start}
+  .layout-d .g2,.layout-d .g3,.layout-d .g4{grid-column:auto!important}
+  .layout-d .g4{grid-column:1/-1!important}
+  .sg--1,.sg--2{grid-column:auto!important}
+}
+
+/* story gallery rows (generated) */
+.sgal{display:flex;flex-direction:column;gap:clamp(60px,7vw,110px)}
+.srow{display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(16px,2vw,30px);align-items:center}
+.srow .ph{margin:0}
+.sr-cine{grid-column:2/12;--ar:656/269}
+.srow--cine-r .sr-cine{grid-column:1/11}
+.srow--cine:not(.srow--cine-r) .sr-cine{grid-column:3/13}
+.sr-big{grid-column:1/8;--ar:3/2}
+.sr-small{grid-column:8/13;--ar:1/1}
+.srow--flip .sr-big{grid-column:6/13;grid-row:1}
+.srow--flip .sr-small{grid-column:1/6;grid-row:1}
+.sr-single{grid-column:3/11;--ar:3/2}
+@media (max-width:900px){
+  .srow .ph{grid-column:1/-1!important;grid-row:auto!important}
+  .sr-small{--ar:4/3}
+}
+.sgal{align-items:stretch}.srow{width:100%}
