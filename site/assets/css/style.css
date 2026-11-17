@@ -301,3 +301,10 @@ em{font-family:var(--serif);font-style:italic;font-weight:300}
   .index a i,.index a span{width:auto;text-align:center}
 }
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+/* the Malta film */
+.film__video{filter:saturate(.9) contrast(1.05);transform:scale(1.38)} /* crops the letterbox bars burned into the film */
+.film__play i{font-style:normal;font-size:9px;letter-spacing:.24em;color:var(--on-noir-soft);margin-left:6px}
+.reelbox__title{position:absolute;top:28px;left:var(--pad);font-family:var(--serif);font-size:22px}
+.reelbox__title em{color:var(--on-noir-soft)}
+.reelbox video{width:min(1200px,92vw)}
