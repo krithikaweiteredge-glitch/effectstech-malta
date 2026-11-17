@@ -116,10 +116,32 @@
       gsap.from($('.opener__text', op).children, { y: 70, opacity: 0, duration: 1.6, stagger: .12, ease: 'expo.out', scrollTrigger: { trigger: op, start: 'top 45%' } });
     });
 
-    $$('[data-reveal] .ph__crop, .reel .ph__crop, .sitem .ph__crop').forEach(crop => {
-      gsap.timeline({ scrollTrigger: { trigger: crop, start: 'top 90%' } })
-        .from(crop, { clipPath: 'inset(100% 0% 0% 0%)', duration: 1.6, ease: 'expo.inOut' })
-        .from($('img', crop), { scale: 1.3, duration: 2, ease: 'expo.out' }, '-=1.2');
+    /* home spreads: counter, gold progress line, gentle parallax inside each frame */
+    $$('.spread').forEach(sp => {
+      const figs = $$('.spread__ph', sp), count = $('.spread__count b', sp), line = $('.spread__line i', sp);
+      figs.forEach((f, i) => {
+        const cap = $('figcaption', f); if (cap) cap.dataset.n = String(i + 1).padStart(2, '0');
+        const im = $('img', f); gsap.set(im, { scale: 1.12 });
+        gsap.fromTo(im, { yPercent: -5 }, { yPercent: 5, ease: 'none', scrollTrigger: { trigger: f, start: 'top bottom', end: 'bottom top', scrub: true } });
+        ScrollTrigger.create({ trigger: f, start: 'top 60%', end: 'bottom 60%', onToggle: s => { if (s.isActive && count) count.textContent = String(i + 1).padStart(2, '0'); } });
+      });
+      if (line) gsap.to(line, { scaleX: 1, ease: 'none', scrollTrigger: { trigger: $('.spread__photos', sp), start: 'top 60%', end: 'bottom 60%', scrub: true } });
+    });
+
+    $$('[data-reveal] .ph__crop, .sitem .ph__crop').forEach(crop => {
+      const im = $('img', crop), rest = gsap.getProperty(im, 'scale') || 1;
+      gsap.timeline({ scrollTrigger: { trigger: crop, start: 'top 88%' } })
+        .from(crop, { clipPath: 'inset(100% 0% 0% 0%)', duration: 1.7, ease: 'expo.inOut' })
+        .fromTo(im, { scale: rest + .25 }, { scale: rest, duration: 2.2, ease: 'expo.out' }, '-=1.3');
+    });
+
+    /* the sangeet gallery wall: scroll down, travel sideways */
+    const hs = $('.hscroll');
+    if (hs) gsap.matchMedia().add('(min-width: 901px)', () => {
+      const track = $('.hscroll__track', hs), dist = () => track.scrollWidth - innerWidth;
+      const tl = gsap.timeline({ scrollTrigger: { trigger: hs, start: 'top top', end: () => '+=' + dist(), pin: true, scrub: 1, invalidateOnRefresh: true } });
+      tl.to(track, { x: () => -dist(), ease: 'none' }, 0).to('.hscroll__bar i', { scaleX: 1, ease: 'none' }, 0);
+      gsap.from($$('.ph__crop', hs), { clipPath: 'inset(0% 0% 0% 100%)', duration: 1.6, stagger: .12, ease: 'expo.inOut', scrollTrigger: { trigger: hs, start: 'top 70%' } });
     });
     $$('.copy, .prologue__text, .keep__head, .keep article h3, .col, .pull, .collections .h2, .cta > *, .sintro > *, .sitem__text, .tier__text, .steps li, .next li, .faq__list details, .manifesto__text, .pillars h3, .place, .feature__text, .places__head, .faq__head').forEach(el =>
       gsap.from(el, { y: 50, opacity: 0, duration: 1.4, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 90%' } }));

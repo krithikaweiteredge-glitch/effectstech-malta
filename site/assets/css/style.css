@@ -674,3 +674,61 @@ body{text-rendering:optimizeLegibility;font-feature-settings:"liga","kern"}
   .sr-small{--ar:4/3}
 }
 .sgal{align-items:stretch}.srow{width:100%}
+
+/* gold frame starts below the header so it never runs behind the logo or Enquire */
+.hero__border{top:clamp(92px,8.5vw,112px);left:clamp(14px,1.8vw,26px);right:clamp(14px,1.8vw,26px);bottom:clamp(14px,1.8vw,26px)}
+@media (max-width:900px){.hero__border{top:78px}}
+@media (max-width:760px){.hero__border{top:70px;left:10px;right:10px;bottom:10px}}
+
+/* =========================================================
+   HOME CHAPTERS v3 — sticky editorial spreads
+   text holds still, photographs pass by at their natural shape
+   ========================================================= */
+.spread{display:grid;grid-template-columns:5fr 7fr;gap:clamp(40px,7vw,130px);padding:clamp(110px,12vw,190px) var(--pad);align-items:start}
+.spread--flip{grid-template-columns:7fr 5fr}
+.spread--flip .spread__text{order:2}
+.spread__sticky{position:sticky;top:26vh;max-width:440px}
+.spread--flip .spread__sticky{margin-left:auto}
+.spread .copy{max-width:none}
+.spread__meta{display:flex;align-items:center;gap:20px;margin-top:46px}
+.spread__count{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--gold);white-space:nowrap}
+.spread__count b{font-weight:400;font-size:30px;color:var(--ink);font-style:normal;margin-right:2px}
+.chapter--dark .spread__count b{color:var(--on-noir)}
+.spread__line{position:relative;flex:1;max-width:180px;height:1px;background:var(--line)}
+.chapter--dark .spread__line{background:var(--line-noir)}
+.spread__line i{position:absolute;inset:0;background:var(--gold);transform-origin:left;transform:scaleX(0)}
+.spread__photos{display:flex;flex-direction:column;gap:clamp(80px,10vw,160px)}
+.spread__ph{width:100%}
+.spread__ph:nth-child(even){width:80%;align-self:flex-end}
+.spread--flip .spread__ph:nth-child(even){align-self:flex-start}
+.spread__ph img{aspect-ratio:auto;height:auto;will-change:transform}
+.spread__ph figcaption{display:flex;gap:12px;align-items:baseline}
+.spread__ph figcaption::before{content:attr(data-n);font-family:var(--sans);font-style:normal;font-size:10px;letter-spacing:.2em;color:var(--gold)}
+
+/* the sangeet: a gallery wall that moves sideways as you scroll down */
+.hscroll{position:relative;height:100vh;height:100svh;overflow:hidden;display:flex;align-items:center}
+.hscroll__track{display:flex;align-items:center;gap:clamp(24px,3vw,48px);padding:0 var(--pad);will-change:transform}
+.hscroll__copy{flex:0 0 min(440px,80vw);max-width:none}
+.hscroll__hint{margin-top:28px;font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:#e8d3b0}
+.hscroll .ph{flex:0 0 auto}
+.hscroll .ph img{height:min(62vh,560px);width:auto;aspect-ratio:3/2}
+.hscroll .ph--tall img{aspect-ratio:3/4}
+.hscroll .ph:nth-of-type(even){margin-top:8vh}
+.hscroll .ph:nth-of-type(odd){margin-bottom:8vh}
+.hscroll__bar{position:absolute;left:var(--pad);right:var(--pad);bottom:6vh;height:1px;background:var(--line-noir)}
+.hscroll__bar i{position:absolute;inset:0;background:#e8d3b0;transform-origin:left;transform:scaleX(0)}
+
+@media (max-width:900px){
+  .spread,.spread--flip{grid-template-columns:1fr;gap:40px}
+  .spread--flip .spread__text{order:0}
+  .spread__sticky{position:static;max-width:none}
+  .spread__meta{display:none}
+  .spread__ph:nth-child(even){width:100%}
+  .hscroll{height:auto;display:block;padding:80px 0}
+  .hscroll__track{overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:20px}
+  .hscroll .ph{scroll-snap-align:center}
+  .hscroll .ph img{height:46vh}
+  .hscroll .ph:nth-of-type(n){margin:0}
+  .hscroll__bar{display:none}
+}
+.spread__text{align-self:stretch}  /* full-height column so the text can stay pinned */
